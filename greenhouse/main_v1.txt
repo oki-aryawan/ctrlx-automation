@@ -46,24 +46,22 @@ END_IF;
 
 timer(IN := TRUE, PT := timerInterval);
 
-// Check if the timer has elapsed
-IF timer.Q THEN
-    // Reset the timer
-    timer(IN := FALSE);
-    timer(IN := TRUE);
-
-    // Generate the next random values for temp and humid
-    seed := (a * seed + c) MOD m;
-    temp := 25 + (seed MOD 21); // Example range for temperature
-    seed := (a * seed + c) MOD m;
-    humid := 60 + (seed MOD 21); // Example range for humidity
-END_IF
-
 IF status THEN
 	str_status := 'ON';
+	IF timer.Q THEN
+		timer(IN := FALSE);
+		timer(IN := TRUE);
+		
+		// Generate the next random values for temp and humid
+		seed := (a * seed + c) MOD m;
+		temp := 25 + (seed MOD 21); // Example range for temperature
+		seed := (a * seed + c) MOD m;
+		humid := 60 + (seed MOD 21); // Example range for humidity
+	END_IF
 	// Check start and stop conditions
 	IF start THEN
 		str_operation := 'START';
+		
 		IF temp > temp_thres THEN
 			cool := TRUE;
 			cool_status := 'ON';
