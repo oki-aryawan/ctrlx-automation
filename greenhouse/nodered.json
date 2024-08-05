@@ -1,0 +1,1152 @@
+[
+    {
+        "id": "c7fbb1348a43ece8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a6127dfb07107ac3",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "c7fbb1348a43ece8",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "plc/app/Application/sym/PLC_PRG/humid",
+        "name": "humid",
+        "x": 630,
+        "y": 20,
+        "wires": [
+            [
+                "e62b77fa85ed7ea8",
+                "2851910639af93df"
+            ]
+        ]
+    },
+    {
+        "id": "e62b77fa85ed7ea8",
+        "type": "ui_gauge",
+        "z": "c7fbb1348a43ece8",
+        "name": "humid_gauge",
+        "group": "aee5baaf76ca0de6",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "30",
+        "seg2": "60",
+        "diff": false,
+        "className": "",
+        "x": 820,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "07c3cd8167ae481c",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "c7fbb1348a43ece8",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "plc/app/Application/sym/PLC_PRG/temp",
+        "name": "temp",
+        "x": 630,
+        "y": 120,
+        "wires": [
+            [
+                "cea378d8df56cfe3",
+                "082f50d44e81f0f9"
+            ]
+        ]
+    },
+    {
+        "id": "cea378d8df56cfe3",
+        "type": "ui_gauge",
+        "z": "c7fbb1348a43ece8",
+        "name": "humid_gauge",
+        "group": "aee5baaf76ca0de6",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "Celcius",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "40",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "15",
+        "seg2": "35",
+        "diff": false,
+        "className": "",
+        "x": 820,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "36f076bb8fe2098b",
+        "type": "ctrlx-datalayer-request",
+        "z": "c7fbb1348a43ece8",
+        "device": "5096f8cfb7e989cb",
+        "method": "WRITE",
+        "path": "plc/app/Application/sym/PLC_PRG/start",
+        "payloadFormat": "value_type",
+        "name": "start_button",
+        "x": 450,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b60ec6f793a16068",
+        "type": "ui_button",
+        "z": "c7fbb1348a43ece8",
+        "name": "",
+        "group": "3f1c7a921e1ae59e",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Start",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "green",
+        "className": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 130,
+        "y": 260,
+        "wires": [
+            [
+                "522c700397132872"
+            ]
+        ]
+    },
+    {
+        "id": "522c700397132872",
+        "type": "function",
+        "z": "c7fbb1348a43ece8",
+        "name": "bool8",
+        "func": "msg.payload = {type:\"bool8\", value:true}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 260,
+        "wires": [
+            [
+                "36f076bb8fe2098b"
+            ]
+        ]
+    },
+    {
+        "id": "613cb2decc5917a9",
+        "type": "ctrlx-datalayer-request",
+        "z": "c7fbb1348a43ece8",
+        "device": "5096f8cfb7e989cb",
+        "method": "WRITE",
+        "path": "plc/app/Application/sym/PLC_PRG/stop",
+        "payloadFormat": "value_type",
+        "name": "stop_button",
+        "x": 430,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "323904fa20a52407",
+        "type": "ui_button",
+        "z": "c7fbb1348a43ece8",
+        "name": "",
+        "group": "3f1c7a921e1ae59e",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Stop",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "red",
+        "className": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 130,
+        "y": 320,
+        "wires": [
+            [
+                "0ce12a8146c231a8"
+            ]
+        ]
+    },
+    {
+        "id": "0ce12a8146c231a8",
+        "type": "function",
+        "z": "c7fbb1348a43ece8",
+        "name": "bool8",
+        "func": "msg.payload = {type:\"bool8\", value:true}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 320,
+        "wires": [
+            [
+                "613cb2decc5917a9"
+            ]
+        ]
+    },
+    {
+        "id": "4944d5ac623bb1c5",
+        "type": "ctrlx-datalayer-request",
+        "z": "c7fbb1348a43ece8",
+        "device": "5096f8cfb7e989cb",
+        "method": "WRITE",
+        "path": "plc/app/Application/sym/PLC_PRG/status",
+        "payloadFormat": "value_type",
+        "name": "switch on",
+        "x": 420,
+        "y": 20,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "68fa8defc5817f09",
+        "type": "function",
+        "z": "c7fbb1348a43ece8",
+        "name": "bool8",
+        "func": "msg.payload = {type:\"bool8\", value:true}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 20,
+        "wires": [
+            [
+                "4944d5ac623bb1c5"
+            ]
+        ]
+    },
+    {
+        "id": "42dde61dcf89935c",
+        "type": "ui_button",
+        "z": "c7fbb1348a43ece8",
+        "name": "",
+        "group": "3f1c7a921e1ae59e",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "On",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "green",
+        "className": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 130,
+        "y": 20,
+        "wires": [
+            [
+                "68fa8defc5817f09"
+            ]
+        ]
+    },
+    {
+        "id": "b2b27f3eecd474f9",
+        "type": "ctrlx-datalayer-request",
+        "z": "c7fbb1348a43ece8",
+        "device": "5096f8cfb7e989cb",
+        "method": "WRITE",
+        "path": "plc/app/Application/sym/PLC_PRG/status",
+        "payloadFormat": "value_type",
+        "name": "switch off",
+        "x": 420,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cd462a6c29f35ec5",
+        "type": "function",
+        "z": "c7fbb1348a43ece8",
+        "name": "bool8",
+        "func": "msg.payload = {type:\"bool8\", value:false}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 80,
+        "wires": [
+            [
+                "b2b27f3eecd474f9"
+            ]
+        ]
+    },
+    {
+        "id": "a3c11746c752217f",
+        "type": "ui_button",
+        "z": "c7fbb1348a43ece8",
+        "name": "",
+        "group": "3f1c7a921e1ae59e",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Off",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "red",
+        "className": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "cd462a6c29f35ec5"
+            ]
+        ]
+    },
+    {
+        "id": "c2c120ac9b6d700c",
+        "type": "ui_text",
+        "z": "c7fbb1348a43ece8",
+        "group": "3f1c7a921e1ae59e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 290,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "590dd529416d5f1a",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "c7fbb1348a43ece8",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "plc/app/Application/sym/PLC_PRG/str_status",
+        "name": "status",
+        "x": 130,
+        "y": 380,
+        "wires": [
+            [
+                "c2c120ac9b6d700c"
+            ]
+        ]
+    },
+    {
+        "id": "a975f504dfdb40c8",
+        "type": "ui_text",
+        "z": "c7fbb1348a43ece8",
+        "group": "611ade79db6d6d12",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Heater",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 790,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "dabec734e9e01f3c",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "c7fbb1348a43ece8",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "plc/app/Application/sym/PLC_PRG/heater_status",
+        "name": "heater",
+        "x": 630,
+        "y": 220,
+        "wires": [
+            [
+                "a975f504dfdb40c8"
+            ]
+        ]
+    },
+    {
+        "id": "3177a3acac3e5f89",
+        "type": "ui_text",
+        "z": "c7fbb1348a43ece8",
+        "group": "611ade79db6d6d12",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Cool",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "className": "",
+        "x": 790,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "79cacc3021668950",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "c7fbb1348a43ece8",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "plc/app/Application/sym/PLC_PRG/cool_status",
+        "name": "cool",
+        "x": 630,
+        "y": 280,
+        "wires": [
+            [
+                "3177a3acac3e5f89"
+            ]
+        ]
+    },
+    {
+        "id": "4c4d2e943d659a2a",
+        "type": "ui_text",
+        "z": "c7fbb1348a43ece8",
+        "group": "3f1c7a921e1ae59e",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Operation",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 300,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "2190c22863781cc9",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "c7fbb1348a43ece8",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "plc/app/Application/sym/PLC_PRG/str_operation",
+        "name": "operation",
+        "x": 140,
+        "y": 440,
+        "wires": [
+            [
+                "4c4d2e943d659a2a"
+            ]
+        ]
+    },
+    {
+        "id": "8dfcf590f34818d5",
+        "type": "ctrlx-datalayer-request",
+        "z": "c7fbb1348a43ece8",
+        "device": "5096f8cfb7e989cb",
+        "method": "WRITE",
+        "path": "plc/app/Application/sym/PLC_PRG/emergency",
+        "payloadFormat": "value_type",
+        "name": "emrgency on",
+        "x": 490,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "86b7c3c9419b3397",
+        "type": "function",
+        "z": "c7fbb1348a43ece8",
+        "name": "bool8",
+        "func": "msg.payload = {type:\"bool8\", value:true}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 140,
+        "wires": [
+            [
+                "8dfcf590f34818d5"
+            ]
+        ]
+    },
+    {
+        "id": "2ac837afe8ca4f05",
+        "type": "ui_button",
+        "z": "c7fbb1348a43ece8",
+        "name": "",
+        "group": "3f1c7a921e1ae59e",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Emergency On",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "green",
+        "className": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "86b7c3c9419b3397"
+            ]
+        ]
+    },
+    {
+        "id": "1bbd7bfbce3d6b96",
+        "type": "ctrlx-datalayer-request",
+        "z": "c7fbb1348a43ece8",
+        "device": "5096f8cfb7e989cb",
+        "method": "WRITE",
+        "path": "plc/app/Application/sym/PLC_PRG/emergency",
+        "payloadFormat": "value_type",
+        "name": "emergency off",
+        "x": 480,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d2c97cab5002ce0b",
+        "type": "function",
+        "z": "c7fbb1348a43ece8",
+        "name": "bool8",
+        "func": "msg.payload = {type:\"bool8\", value:false}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 200,
+        "wires": [
+            [
+                "1bbd7bfbce3d6b96"
+            ]
+        ]
+    },
+    {
+        "id": "b8cbf74fbd95d75c",
+        "type": "ui_button",
+        "z": "c7fbb1348a43ece8",
+        "name": "",
+        "group": "3f1c7a921e1ae59e",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Emergency Off",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "red",
+        "className": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 160,
+        "y": 200,
+        "wires": [
+            [
+                "d2c97cab5002ce0b"
+            ]
+        ]
+    },
+    {
+        "id": "fbba06dd86078294",
+        "type": "ui_text",
+        "z": "c7fbb1348a43ece8",
+        "group": "3f1c7a921e1ae59e",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Emergency",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 310,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "3fafec3a3fe5fe69",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "c7fbb1348a43ece8",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "plc/app/Application/sym/PLC_PRG/str_emergency",
+        "name": "emergency",
+        "x": 140,
+        "y": 500,
+        "wires": [
+            [
+                "fbba06dd86078294"
+            ]
+        ]
+    },
+    {
+        "id": "1857853c4a7123b9",
+        "type": "ctrlx-datalayer-request",
+        "z": "c7fbb1348a43ece8",
+        "device": "5096f8cfb7e989cb",
+        "method": "WRITE",
+        "path": "plc/app/Application/sym/PLC_PRG/humid",
+        "payloadFormat": "value_type",
+        "name": "humid",
+        "x": 630,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ba8f4a3d108c9720",
+        "type": "inject",
+        "z": "c7fbb1348a43ece8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9b35f6332fd7c437",
+        "type": "random",
+        "z": "c7fbb1348a43ece8",
+        "name": "",
+        "low": "50",
+        "high": "100",
+        "inte": "true",
+        "property": "payload",
+        "x": 320,
+        "y": 880,
+        "wires": [
+            [
+                "1999132d9464620b"
+            ]
+        ]
+    },
+    {
+        "id": "1999132d9464620b",
+        "type": "function",
+        "z": "c7fbb1348a43ece8",
+        "name": "int16-humid",
+        "func": "msg.payload = { type: \"int16\", value: msg.payload}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3999635538f2ebf8",
+        "type": "ctrlx-datalayer-request",
+        "z": "c7fbb1348a43ece8",
+        "device": "5096f8cfb7e989cb",
+        "method": "WRITE",
+        "path": "plc/app/Application/sym/PLC_PRG/temp",
+        "payloadFormat": "value_type",
+        "name": "temp",
+        "x": 630,
+        "y": 940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d3da026ffbbc0636",
+        "type": "inject",
+        "z": "c7fbb1348a43ece8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "14cbd043dd70ac13",
+        "type": "random",
+        "z": "c7fbb1348a43ece8",
+        "name": "",
+        "low": "25",
+        "high": "40",
+        "inte": "true",
+        "property": "payload",
+        "x": 320,
+        "y": 940,
+        "wires": [
+            [
+                "b2df810642c74f54"
+            ]
+        ]
+    },
+    {
+        "id": "b2df810642c74f54",
+        "type": "function",
+        "z": "c7fbb1348a43ece8",
+        "name": "int16-temp",
+        "func": "msg.payload = { type: \"int16\", value: msg.payload}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "082f50d44e81f0f9",
+        "type": "influxdb out",
+        "z": "c7fbb1348a43ece8",
+        "influxdb": "866056b97a38d240",
+        "name": "temp",
+        "measurement": "Temperature",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "boschrexroth",
+        "bucket": "green_house_param",
+        "x": 790,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "2851910639af93df",
+        "type": "influxdb out",
+        "z": "c7fbb1348a43ece8",
+        "influxdb": "866056b97a38d240",
+        "name": "humid",
+        "measurement": "Humidity",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "boschrexroth",
+        "bucket": "green_house_param",
+        "x": 790,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "dc547a2f2615229b",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "c7fbb1348a43ece8",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "plc/app/Application/sym/PLC_PRG/cool",
+        "name": "cool",
+        "x": 630,
+        "y": 520,
+        "wires": [
+            [
+                "db08425a26862c7f"
+            ]
+        ]
+    },
+    {
+        "id": "1f47ba2a6da113e6",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "c7fbb1348a43ece8",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "plc/app/Application/sym/PLC_PRG/heater",
+        "name": "heater",
+        "x": 630,
+        "y": 460,
+        "wires": [
+            [
+                "b50ddb6f1ccda5eb"
+            ]
+        ]
+    },
+    {
+        "id": "b50ddb6f1ccda5eb",
+        "type": "ui_led",
+        "z": "c7fbb1348a43ece8",
+        "order": 2,
+        "group": "611ade79db6d6d12",
+        "width": "0",
+        "height": "0",
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "center",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "led_heater",
+        "x": 790,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "db08425a26862c7f",
+        "type": "ui_led",
+        "z": "c7fbb1348a43ece8",
+        "order": 4,
+        "group": "611ade79db6d6d12",
+        "width": "0",
+        "height": "0",
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "led_cool",
+        "x": 780,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "d3772b7d5af049a7",
+        "type": "ui_text",
+        "z": "c7fbb1348a43ece8",
+        "group": "611ade79db6d6d12",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Humidifier",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 800,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "e63b055f87c7c5be",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "c7fbb1348a43ece8",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "plc/app/Application/sym/PLC_PRG/humidifier_status",
+        "name": "humidifier",
+        "x": 640,
+        "y": 340,
+        "wires": [
+            [
+                "d3772b7d5af049a7"
+            ]
+        ]
+    },
+    {
+        "id": "1937bcbae563c949",
+        "type": "ui_text",
+        "z": "c7fbb1348a43ece8",
+        "group": "611ade79db6d6d12",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Dehumidifier",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 810,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "59904471356c0436",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "c7fbb1348a43ece8",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "plc/app/Application/sym/PLC_PRG/dehumidifier_status",
+        "name": "dehumid",
+        "x": 640,
+        "y": 400,
+        "wires": [
+            [
+                "1937bcbae563c949"
+            ]
+        ]
+    },
+    {
+        "id": "cded3dbc0d57da86",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "c7fbb1348a43ece8",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "plc/app/Application/sym/PLC_PRG/dehumidifier",
+        "name": "humidifier",
+        "x": 640,
+        "y": 660,
+        "wires": [
+            [
+                "a0c38465293eaa59"
+            ]
+        ]
+    },
+    {
+        "id": "f7f77d0a1f5a4201",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "c7fbb1348a43ece8",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "plc/app/Application/sym/PLC_PRG/humidifier",
+        "name": "humidifier",
+        "x": 640,
+        "y": 580,
+        "wires": [
+            [
+                "4e035396d50ca730"
+            ]
+        ]
+    },
+    {
+        "id": "4e035396d50ca730",
+        "type": "ui_led",
+        "z": "c7fbb1348a43ece8",
+        "order": 6,
+        "group": "611ade79db6d6d12",
+        "width": "0",
+        "height": "0",
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "center",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "led_humid",
+        "x": 790,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "a0c38465293eaa59",
+        "type": "ui_led",
+        "z": "c7fbb1348a43ece8",
+        "order": 8,
+        "group": "611ade79db6d6d12",
+        "width": "0",
+        "height": "0",
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "led_dehumid",
+        "x": 790,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "0c1de4dcf35a4d8b",
+        "type": "ctrlx-config-subscription",
+        "device": "5096f8cfb7e989cb",
+        "name": "local_subb",
+        "publishIntervalMs": "1"
+    },
+    {
+        "id": "aee5baaf76ca0de6",
+        "type": "ui_group",
+        "name": "Monitoring",
+        "tab": "58d0cae575f2a726",
+        "order": 1,
+        "disp": true,
+        "width": "9",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "5096f8cfb7e989cb",
+        "type": "ctrlx-config",
+        "name": "local_sub",
+        "hostname": "localhost",
+        "debug": false
+    },
+    {
+        "id": "3f1c7a921e1ae59e",
+        "type": "ui_group",
+        "name": "Action",
+        "tab": "58d0cae575f2a726",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "611ade79db6d6d12",
+        "type": "ui_group",
+        "name": "Indicator",
+        "tab": "58d0cae575f2a726",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "866056b97a38d240",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "influx",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8086",
+        "timeout": "10",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "58d0cae575f2a726",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
