@@ -1,6 +1,19 @@
 # Green House Monitoring
 ## System Topology
+<p align="center">
+  <img src="imgs/topology.png" align="middle" width = "500" />
+</p>
 
+## PLC Visualization
+The temperature and humidity variable generated with random value (virtual project)
+<p align="center">
+  <img src="imgs/vis_codesys.PNG" align="middle" width = "500" />
+</p>
+
+## NodeRED Dashboard
+<p align="center">
+  <img src="imgs/dashboard_nodered.PNG" align="middle" width = "500" />
+</p>
 
 ## Issues
 - Program loaded - EXCEPTION
