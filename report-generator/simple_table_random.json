@@ -1,0 +1,120 @@
+[
+    {
+        "id": "032dfc424d37216e",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9b90c01ac9fe1e92",
+        "type": "debug",
+        "z": "032dfc424d37216e",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "40aa0652.d1bf88",
+        "type": "pdfmake",
+        "z": "032dfc424d37216e",
+        "name": "",
+        "outputType": "Buffer",
+        "inputProperty": "payload",
+        "options": "{}",
+        "outputProperty": "payload",
+        "x": 320,
+        "y": 140,
+        "wires": [
+            [
+                "97d255cf.8bc138"
+            ]
+        ]
+    },
+    {
+        "id": "30e9a280.04a94e",
+        "type": "inject",
+        "z": "032dfc424d37216e",
+        "name": "Generate Report",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "bcd8fecd.03ed98"
+            ]
+        ]
+    },
+    {
+        "id": "97d255cf.8bc138",
+        "type": "file",
+        "z": "032dfc424d37216e",
+        "name": "",
+        "filename": "F:\\2.RESEARCH\\MQTT\\test_report.pdf",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 560,
+        "y": 140,
+        "wires": [
+            [
+                "9b90c01ac9fe1e92"
+            ]
+        ]
+    },
+    {
+        "id": "da72935b.7c159",
+        "type": "comment",
+        "z": "032dfc424d37216e",
+        "name": "Generate PDF Report with Random Data",
+        "info": "",
+        "x": 220,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "bcd8fecd.03ed98",
+        "type": "function",
+        "z": "032dfc424d37216e",
+        "name": "Generate Data and Format PDF",
+        "func": "let data = [];\n\n// Generate random temperature and humidity data\nfor (let i = 0; i < 10; i++) {\n    let time = new Date(Date.now() - i * 60000).toLocaleTimeString(); // 1 minute intervals\n    let temp = (Math.random() * 10 + 20).toFixed(2); // random temp between 20-30\n    let hum = (Math.random() * 20 + 60).toFixed(2); // random humidity between 60-80\n    data.push([time, temp + ' °C', hum + ' %']);\n}\n\n// Format PDF content\nmsg.payload = {\n    content: [\n        { text: 'Temperature and Humidity Report', style: 'header' },\n        {\n            table: {\n                body: [\n                    ['Time', 'Temperature', 'Humidity'],\n                    ...data\n                ]\n            }\n        }\n    ],\n    styles: {\n        header: {\n            fontSize: 18,\n            bold: true,\n            margin: [0, 0, 0, 10]\n        }\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 200,
+        "wires": [
+            [
+                "40aa0652.d1bf88"
+            ]
+        ]
+    }
+]
