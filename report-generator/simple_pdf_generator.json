@@ -1,0 +1,102 @@
+[
+    {
+        "id": "032dfc424d37216e",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9b90c01ac9fe1e92",
+        "type": "debug",
+        "z": "032dfc424d37216e",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "40aa0652.d1bf88",
+        "type": "pdfmake",
+        "z": "032dfc424d37216e",
+        "name": "",
+        "outputType": "Buffer",
+        "inputProperty": "payload",
+        "options": "{}",
+        "outputProperty": "payload",
+        "x": 320,
+        "y": 140,
+        "wires": [
+            [
+                "97d255cf.8bc138"
+            ]
+        ]
+    },
+    {
+        "id": "30e9a280.04a94e",
+        "type": "inject",
+        "z": "032dfc424d37216e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"content\":[\"First paragraph\",\"Another paragraph, this time a little bit longer to make sure, this line will be divided into at least two lines\"]}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "40aa0652.d1bf88"
+            ]
+        ]
+    },
+    {
+        "id": "97d255cf.8bc138",
+        "type": "file",
+        "z": "032dfc424d37216e",
+        "name": "",
+        "filename": "F:\\2.RESEARCH\\MQTT\\te2st.pdf",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 560,
+        "y": 140,
+        "wires": [
+            [
+                "9b90c01ac9fe1e92"
+            ]
+        ]
+    },
+    {
+        "id": "da72935b.7c159",
+        "type": "comment",
+        "z": "032dfc424d37216e",
+        "name": "Simple Example PDF",
+        "info": "This is the simplest PDF test as seen in the pdfmake examples [here](http://pdfmake.org/playground.html)",
+        "x": 200,
+        "y": 100,
+        "wires": []
+    }
+]
