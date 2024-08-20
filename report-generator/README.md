@@ -1,9 +1,8 @@
 # Report Generator (PDF)
 
 ```mermaid
-graph TD;
-    PLC-->DataLayer --> Telegraf --> InfluxDB;
-    InfluxDB --> NodeRED --> PDF;
+graph LR;
+    PLC-->DataLayer --> Telegraf --> InfluxDB --> NodeRED --> PDF;
 ```
 
 ## Node-RED
