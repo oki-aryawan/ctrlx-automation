@@ -1,0 +1,428 @@
+[
+    {
+        "id": "e61ca91a93d3837e",
+        "type": "tab",
+        "label": "System Monitoring",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9f8df5c0066bece1",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "e61ca91a93d3837e",
+        "subscription": "bb84fa8d76d57446",
+        "path": "framework/metrics/system/memused-percent",
+        "name": "mem_used%",
+        "x": 290,
+        "y": 100,
+        "wires": [
+            [
+                "e70127428da3ac13",
+                "a8e261955d44ddd0"
+            ]
+        ]
+    },
+    {
+        "id": "c3c3f10f7d6d7e0b",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "e61ca91a93d3837e",
+        "subscription": "bb84fa8d76d57446",
+        "path": "framework/metrics/system/memavailable-mb",
+        "name": "Memory Avaible",
+        "x": 300,
+        "y": 160,
+        "wires": [
+            [
+                "05e8e322e8026ba7",
+                "9a4a04055c9b29f7"
+            ]
+        ]
+    },
+    {
+        "id": "9d9676b02f35edff",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "e61ca91a93d3837e",
+        "subscription": "bb84fa8d76d57446",
+        "path": "framework/metrics/system/memcache-mb",
+        "name": "mem_chace",
+        "x": 290,
+        "y": 240,
+        "wires": [
+            [
+                "be062a6071cf3a47",
+                "90fa98eb6fc0d0fb"
+            ]
+        ]
+    },
+    {
+        "id": "e70127428da3ac13",
+        "type": "ui_gauge",
+        "z": "e61ca91a93d3837e",
+        "name": "",
+        "group": "86dc78c2e72cf050",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Memory Used",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "40",
+        "seg2": "75",
+        "diff": false,
+        "className": "",
+        "x": 540,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "d99af87be13dfd48",
+        "type": "ui_chart",
+        "z": "e61ca91a93d3837e",
+        "name": "",
+        "group": "86dc78c2e72cf050",
+        "order": 2,
+        "width": 8,
+        "height": 5,
+        "label": "Memory Used",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm",
+        "interpolate": "bezier",
+        "nodata": "",
+        "dot": true,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 800,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "05e8e322e8026ba7",
+        "type": "function",
+        "z": "e61ca91a93d3837e",
+        "name": "function 1",
+        "func": "msg.topic = \"Memory Avaible\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 160,
+        "wires": [
+            [
+                "d99af87be13dfd48"
+            ]
+        ]
+    },
+    {
+        "id": "be062a6071cf3a47",
+        "type": "function",
+        "z": "e61ca91a93d3837e",
+        "name": "function 2",
+        "func": "msg.topic = \"Memory Chace\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 240,
+        "wires": [
+            [
+                "d99af87be13dfd48"
+            ]
+        ]
+    },
+    {
+        "id": "f43977e64a511a87",
+        "type": "file",
+        "z": "e61ca91a93d3837e",
+        "name": "path",
+        "filename": "solutions/activeConfiguration/node-RED/report2.pdf",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 770,
+        "y": 400,
+        "wires": [
+            [
+                "d876147ea5028ccd"
+            ]
+        ]
+    },
+    {
+        "id": "a96cd480f21d1511",
+        "type": "comment",
+        "z": "e61ca91a93d3837e",
+        "name": "Get system data via Data Layer",
+        "info": "",
+        "x": 290,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "9a4a04055c9b29f7",
+        "type": "influxdb out",
+        "z": "e61ca91a93d3837e",
+        "influxdb": "866056b97a38d240",
+        "name": "mem_avai",
+        "measurement": "Memory Available",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "boschrexroth",
+        "bucket": "green_house_param",
+        "x": 550,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "90fa98eb6fc0d0fb",
+        "type": "influxdb out",
+        "z": "e61ca91a93d3837e",
+        "influxdb": "866056b97a38d240",
+        "name": "mem_chace",
+        "measurement": "Memory Chace",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "boschrexroth",
+        "bucket": "green_house_param",
+        "x": 550,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "a8e261955d44ddd0",
+        "type": "influxdb out",
+        "z": "e61ca91a93d3837e",
+        "influxdb": "866056b97a38d240",
+        "name": "mem_used%",
+        "measurement": "Memory Used",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "boschrexroth",
+        "bucket": "green_house_param",
+        "x": 550,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "d876147ea5028ccd",
+        "type": "debug",
+        "z": "e61ca91a93d3837e",
+        "name": "debug kiew",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 930,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "45c1b04038c71e58",
+        "type": "pdfmake",
+        "z": "e61ca91a93d3837e",
+        "name": "",
+        "outputType": "Buffer",
+        "inputProperty": "payload",
+        "options": "{}",
+        "outputProperty": "payload",
+        "x": 720,
+        "y": 340,
+        "wires": [
+            [
+                "f43977e64a511a87"
+            ]
+        ]
+    },
+    {
+        "id": "09228e90dc255392",
+        "type": "function",
+        "z": "e61ca91a93d3837e",
+        "name": "Format PDF with InfluxDB Data",
+        "func": "let influxData = msg.payload;  // Assuming influxData is an array of results\n\n// Initialize objects to store values\nlet memoryAvailable = {};\nlet memoryCache = {};\nlet memoryUsed = {};\n\n// Separate the data based on measurement type\ninfluxData.forEach(entry => {\n    let time = new Date(entry._time).toLocaleTimeString();\n\n    if (entry._measurement === \"Memory Available\") {\n        memoryAvailable[time] = entry._value;\n    } else if (entry._measurement === \"Memory Chace\") {\n        memoryCache[time] = entry._value;\n    } else if (entry._measurement === \"Memory Used\") {\n        memoryUsed[time] = entry._value;\n    }\n});\n\n// Combine the data into a single table, calculating the memory used percentage\nlet data = [];\n\nObject.keys(memoryUsed).forEach(time => {\n    let usedMB = memoryUsed[time];\n    let cacheMB = memoryCache[time] || '';\n    let availableMB = memoryAvailable[time];\n    let usedPercentage = (usedMB / (usedMB + availableMB)) * 100;\n\n    data.push([time, usedPercentage.toFixed(2), usedMB.toFixed(2), cacheMB.toFixed(2)]);\n});\n\n// Format PDF content\nmsg.payload = {\n    content: [\n        { text: 'Memory Report', style: 'header' },\n        {\n            table: {\n                body: [\n                    ['Time', 'Memory Used', 'Memory Used (MB)', 'Memory Cache (MB)'],\n                    ...data\n                ]\n            }\n        }\n    ],\n    styles: {\n        header: {\n            fontSize: 18,\n            bold: true,\n            margin: [0, 0, 0, 10]\n        }\n    }\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 400,
+        "wires": [
+            [
+                "45c1b04038c71e58"
+            ]
+        ]
+    },
+    {
+        "id": "ae14486ecc2c515c",
+        "type": "influxdb in",
+        "z": "e61ca91a93d3837e",
+        "influxdb": "866056b97a38d240",
+        "name": "get_data_from_Influx",
+        "query": "from(bucket: \"green_house_param\")\n  |> range(start: -1h)  // Change this to the desired time range\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Memory Available\" or r[\"_measurement\"] == \"Memory Chace\" or r[\"_measurement\"] == \"Memory Used\")\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "boschrexroth",
+        "x": 480,
+        "y": 340,
+        "wires": [
+            [
+                "09228e90dc255392"
+            ]
+        ]
+    },
+    {
+        "id": "f3f6c5c257cc6f9b",
+        "type": "inject",
+        "z": "e61ca91a93d3837e",
+        "name": "Generate Report",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 320,
+        "wires": [
+            [
+                "ae14486ecc2c515c"
+            ]
+        ]
+    },
+    {
+        "id": "b4cf3d52c4510a65",
+        "type": "ui_button",
+        "z": "e61ca91a93d3837e",
+        "name": "",
+        "group": "86dc78c2e72cf050",
+        "order": 0,
+        "width": "8",
+        "height": "1",
+        "passthru": false,
+        "label": "Generate PDF Report",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 220,
+        "y": 360,
+        "wires": [
+            [
+                "ae14486ecc2c515c"
+            ]
+        ]
+    },
+    {
+        "id": "bb84fa8d76d57446",
+        "type": "ctrlx-config-subscription",
+        "device": "20e52a117557521a",
+        "name": "system",
+        "publishIntervalMs": ""
+    },
+    {
+        "id": "86dc78c2e72cf050",
+        "type": "ui_group",
+        "name": "Memory",
+        "tab": "d7d6b4190c2cd015",
+        "order": 1,
+        "disp": true,
+        "width": 8,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "866056b97a38d240",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "influx",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8086",
+        "timeout": "10",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "20e52a117557521a",
+        "type": "ctrlx-config",
+        "name": "Boschrexroth123",
+        "hostname": "localhost",
+        "debug": false
+    },
+    {
+        "id": "d7d6b4190c2cd015",
+        "type": "ui_tab",
+        "name": "System Monitoring",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]
