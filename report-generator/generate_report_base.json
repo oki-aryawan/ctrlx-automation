@@ -1,0 +1,213 @@
+[
+    {
+        "id": "9edb7299c21709bc",
+        "type": "tab",
+        "label": "Combine",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "41c236b765668c70",
+        "type": "debug",
+        "z": "9edb7299c21709bc",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "0e5460fe93f10794",
+        "type": "pdfmake",
+        "z": "9edb7299c21709bc",
+        "name": "",
+        "outputType": "Buffer",
+        "inputProperty": "payload",
+        "options": "{}",
+        "outputProperty": "payload",
+        "x": 660,
+        "y": 120,
+        "wires": [
+            [
+                "41393557a243daa1"
+            ]
+        ]
+    },
+    {
+        "id": "53bea1eaa7d4e8c8",
+        "type": "inject",
+        "z": "9edb7299c21709bc",
+        "name": "Generate Report",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 120,
+        "wires": [
+            [
+                "3fba70e3054e1c50"
+            ]
+        ]
+    },
+    {
+        "id": "41393557a243daa1",
+        "type": "file",
+        "z": "9edb7299c21709bc",
+        "name": "",
+        "filename": "F:\\2.RESEARCH\\MQTT\\report.pdf",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 640,
+        "y": 200,
+        "wires": [
+            [
+                "41c236b765668c70"
+            ]
+        ]
+    },
+    {
+        "id": "a74a4a214e8f94b3",
+        "type": "comment",
+        "z": "9edb7299c21709bc",
+        "name": "Generate PDF Report with Random Data",
+        "info": "",
+        "x": 180,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "3fba70e3054e1c50",
+        "type": "file in",
+        "z": "9edb7299c21709bc",
+        "name": "open file",
+        "filename": "F:\\2.RESEARCH\\MQTT\\test_report.png",
+        "filenameType": "str",
+        "format": "stream",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 120,
+        "y": 180,
+        "wires": [
+            [
+                "9b3afa43916c0d1e"
+            ]
+        ]
+    },
+    {
+        "id": "ec78496731feb1aa",
+        "type": "function",
+        "z": "9edb7299c21709bc",
+        "name": "Generate PDF",
+        "func": "let chartImageBase64 = msg.payload;  // Assuming this is the base64 string\nlet data = [];\n\n// Provided temperature and humidity data\nlet labels = ['January', 'February', 'March', 'April', 'May', 'June'];\nlet tempData = [20, 25, 30, 35, 40, 45];\nlet humData = [60, 65, 70, 75, 80, 85];\n\n// Populate the table data\nfor (let i = 0; i < labels.length; i++) {\n    data.push([labels[i], tempData[i] + ' °C', humData[i] + ' %']);\n}\n\nlet content = [\n    { text: 'Temperature and Humidity Report', style: 'header' },\n    {\n        table: {\n            body: [\n                ['Time', 'Temperature', 'Humidity'],\n                ...data\n            ]\n        }\n    },\n    {\n        image: 'data:image/png;base64,' + chartImageBase64,  // Embed the chart image\n        width: 500,\n        height: 250,\n        margin: [0, 20, 0, 0]\n    }\n];\n\nmsg.payload = {\n    content: content,\n    styles: {\n        header: {\n            fontSize: 18,\n            bold: true,\n            margin: [0, 0, 0, 10]\n        }\n    }\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 120,
+        "wires": [
+            [
+                "0e5460fe93f10794"
+            ]
+        ]
+    },
+    {
+        "id": "6dbf0b03eaa34632",
+        "type": "pdfmake",
+        "z": "9edb7299c21709bc",
+        "name": "Generate PDF",
+        "outputType": "Buffer",
+        "inputProperty": "payload",
+        "options": "{}",
+        "outputProperty": "payload",
+        "x": 230,
+        "y": 720,
+        "wires": [
+            [
+                "86e62ad14feef984"
+            ]
+        ]
+    },
+    {
+        "id": "87cfc476f20e7098",
+        "type": "debug",
+        "z": "9edb7299c21709bc",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 630,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "86e62ad14feef984",
+        "type": "file",
+        "z": "9edb7299c21709bc",
+        "name": "",
+        "filename": "F:\\2.RESEARCH\\MQTT\\test_report.pdf",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 440,
+        "y": 840,
+        "wires": [
+            [
+                "87cfc476f20e7098"
+            ]
+        ]
+    },
+    {
+        "id": "9b3afa43916c0d1e",
+        "type": "function",
+        "z": "9edb7299c21709bc",
+        "name": "img to base64",
+        "func": "let imageBuffer = msg.payload;\nmsg.payload = imageBuffer.toString('base64');\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "ec78496731feb1aa"
+            ]
+        ]
+    }
+]
