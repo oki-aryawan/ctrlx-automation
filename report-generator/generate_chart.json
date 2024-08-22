@@ -1,0 +1,103 @@
+[
+    {
+        "id": "b5fa6788c5934c06",
+        "type": "tab",
+        "label": "Generate Chart",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "c3bbee716e823e56",
+        "type": "inject",
+        "z": "b5fa6788c5934c06",
+        "name": "Trigger Chart Generation",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 100,
+        "wires": [
+            [
+                "94285729f2b73eae"
+            ]
+        ]
+    },
+    {
+        "id": "94285729f2b73eae",
+        "type": "function",
+        "z": "b5fa6788c5934c06",
+        "name": "Prepare Chart Data",
+        "func": "msg.payload = {\n    type: 'line',\n    data: {\n        labels: ['January', 'February', 'March', 'April', 'May', 'June'],\n        datasets: [{\n            label: 'Temperature',\n            data: [20, 25, 30, 35, 40, 45],\n            fill: false,\n            borderColor: 'red'\n        }, {\n            label: 'Humidity',\n            data: [60, 65, 70, 75, 80, 85],\n            fill: false,\n            borderColor: 'blue'\n        }]\n    }\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 230,
+        "y": 200,
+        "wires": [
+            [
+                "30b4c1dc1257f332"
+            ]
+        ]
+    },
+    {
+        "id": "30b4c1dc1257f332",
+        "type": "chart-image",
+        "z": "b5fa6788c5934c06",
+        "name": "Generate Chart Image",
+        "width": "600",
+        "height": "400",
+        "x": 460,
+        "y": 120,
+        "wires": [
+            [
+                "c066dc6017f0a30b"
+            ]
+        ]
+    },
+    {
+        "id": "86f13fc387bd8769",
+        "type": "debug",
+        "z": "b5fa6788c5934c06",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 720,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "c066dc6017f0a30b",
+        "type": "file",
+        "z": "b5fa6788c5934c06",
+        "name": "",
+        "filename": "F:\\2.RESEARCH\\MQTT\\test_report.png",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 760,
+        "y": 120,
+        "wires": [
+            [
+                "86f13fc387bd8769"
+            ]
+        ]
+    }
+]
