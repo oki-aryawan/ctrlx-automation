@@ -1,0 +1,21 @@
+[
+    {
+        "id": "a9e2c7c4ed769807",
+        "type": "function",
+        "z": "16fcd8ac5a7a4866",
+        "name": "Format PDF with InfluxDB Data",
+        "func": "let influxData = msg.payload;\nlet memoryAvailable = {};\nlet memoryCache = {};\nlet memoryUsed = {};\n\ninfluxData.forEach(entry => {\n    let time = new Date(entry._time).toLocaleTimeString();\n    if (entry._measurement === \"Memory Available\") {\n        memoryAvailable[time] = entry._value;\n    } else if (entry._measurement === \"Memory Chace\") {\n        memoryCache[time] = entry._value;\n    } else if (entry._measurement === \"Memory Used\") {\n        memoryUsed[time] = entry._value;}\n});\n\nlet data = [];\n\nObject.keys(memoryUsed).forEach(time => {\n    let usedMB = memoryUsed[time];\n    let cacheMB = memoryCache[time] || '';\n    let availableMB = memoryAvailable[time];\n    let usedPercentage = (usedMB / (usedMB + availableMB)) * 100;\n\n    data.push([{ text: time, alignment: 'center' },\n    { text: usedPercentage.toFixed(2), alignment: 'center' },\n    { text: usedMB.toFixed(2), alignment: 'center' },\n    { text: cacheMB.toFixed(2), alignment: 'center' }]);\n});\n\n// Format PDF content\nmsg.payload = {\n    content: [\n        { text: 'Memory Report', style: 'header' },\n        {\n            table: {\n                body: [\n                    [{ text: 'Time', alignment: 'center' },\n                    { text: 'Memory Used (MB)', alignment: 'center' },\n                    { text: 'Memory Used (%)', alignment: 'center' },\n                    { text: 'Memory Cache (MB)', alignment: 'center' }],\n                    ...data\n                ]\n            }\n        }\n    ],\n    styles: {\n        header: {\n            fontSize: 18,\n            bold: true,\n            margin: [0, 0, 0, 10]\n        }\n    }\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 400,
+        "wires": [
+            [
+                "c8b726912ce157fd"
+            ]
+        ]
+    }
+]
