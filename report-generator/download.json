@@ -1,0 +1,103 @@
+[
+    {
+        "id": "3ffa58131ebbdf84",
+        "type": "ui_button",
+        "z": "8efc3f2436cec653",
+        "name": "",
+        "group": "c3585cc69e6539d7",
+        "order": 18,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "DOWNLOAD (COMPLIT)",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 110,
+        "y": 320,
+        "wires": [
+            [
+                "612842d3bfd1069b"
+            ]
+        ]
+    },
+    {
+        "id": "612842d3bfd1069b",
+        "type": "function",
+        "z": "8efc3f2436cec653",
+        "name": "Generate Data and Format PDF",
+        "func": "let temperatureData = global.get('temperatureData') || [];\nlet humidityData = global.get('humidityData') || [];\n\n// Ambil hanya 30 data terbaru\nlet recentTemperatureData = temperatureData.slice(-30);\nlet recentHumidityData = humidityData.slice(-30);\n\n// Gabungkan data temperature dan humidity dalam satu tabel\nlet tableBody = [\n    ['No', 'Temperature', 'Humidity'],\n    ...recentTemperatureData.map((item, index) => [index + 1, item.temperature, recentHumidityData[index]?.humidity || '-'])\n];\n\n// Siapkan konten PDF\nmsg.payload = {\n    content: [\n        { text: 'Temperature and Humidity Report (30 Data Terbaru)', style: 'header' },\n        {\n            table: {\n                body: tableBody\n            }\n        }\n    ],\n    styles: {\n        header: {\n            fontSize: 18,\n            bold: true,\n            margin: [0, 0, 0, 10]\n        }\n    }\n};\n\n//Reset data setelah PDF di-generate (jika diperlukan)\n//global.set('temperatureData', []);\n//global.set('humidityData', []);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 320,
+        "wires": [
+            [
+                "3563dfb181599462"
+            ]
+        ]
+    },
+    {
+        "id": "3563dfb181599462",
+        "type": "pdfmake",
+        "z": "8efc3f2436cec653",
+        "name": "",
+        "outputType": "Buffer",
+        "inputProperty": "payload",
+        "options": "{}",
+        "outputProperty": "payload",
+        "x": 680,
+        "y": 320,
+        "wires": [
+            [
+                "b3caac6b4aee83aa"
+            ]
+        ]
+    },
+    {
+        "id": "b3caac6b4aee83aa",
+        "type": "file",
+        "z": "8efc3f2436cec653",
+        "name": "Save PDF",
+        "filename": "solutions/activeConfiguration/node-RED/hallo/report_pelatihan_jamal.pdf",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 850,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c3585cc69e6539d7",
+        "type": "ui_group",
+        "name": "IOT",
+        "tab": "a86d678c4a2fc74c",
+        "order": 1,
+        "disp": true,
+        "width": "24",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "a86d678c4a2fc74c",
+        "type": "ui_tab",
+        "name": "PELATIHAN_PLCIOT",
+        "icon": "wi-owm-01d",
+        "disabled": false,
+        "hidden": false
+    }
+]
