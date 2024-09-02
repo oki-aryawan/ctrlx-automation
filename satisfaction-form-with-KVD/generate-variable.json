@@ -1,0 +1,98 @@
+[
+    {
+        "id": "75ec3f6929cb4581",
+        "type": "tab",
+        "label": "Generate Variable",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ae347713b4f04ae4",
+        "type": "ctrlx-datalayer-request",
+        "z": "75ec3f6929cb4581",
+        "device": "5096f8cfb7e989cb",
+        "method": "WRITE",
+        "path": "samples/kvd/implicit/sample_abc/test",
+        "payloadFormat": "value_type",
+        "name": "Write",
+        "x": 470,
+        "y": 120,
+        "wires": [
+            [
+                "755938d1894beb11"
+            ]
+        ]
+    },
+    {
+        "id": "eccd50efdd363b5d",
+        "type": "function",
+        "z": "75ec3f6929cb4581",
+        "name": "write",
+        "func": "//prep the data dummy\nconst data = {\n    type: 'int32',\n    value: 0,\n};\n\n// generate the variable\nmsg.path = 'samples/kvd/implicit/sample_abc/test';\nmsg.payload = data;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 120,
+        "wires": [
+            [
+                "ae347713b4f04ae4"
+            ]
+        ]
+    },
+    {
+        "id": "feda6e3bcf11575a",
+        "type": "inject",
+        "z": "75ec3f6929cb4581",
+        "name": "Generate",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 120,
+        "wires": [
+            [
+                "eccd50efdd363b5d"
+            ]
+        ]
+    },
+    {
+        "id": "755938d1894beb11",
+        "type": "debug",
+        "z": "75ec3f6929cb4581",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "5096f8cfb7e989cb",
+        "type": "ctrlx-config",
+        "name": "local_sub",
+        "hostname": "localhost",
+        "debug": false
+    }
+]
