@@ -1,0 +1,264 @@
+[
+    {
+        "id": "d0db2351575f5bd0",
+        "type": "tab",
+        "label": "Optimized Satisfaction Form",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3b29467ba75d3f93",
+        "type": "function",
+        "z": "d0db2351575f5bd0",
+        "name": "KVD select",
+        "func": "// Get the selected satisfaction level from the button click\nconst selection = msg.payload; \n\n// Define the path based on selection\nlet path = '';\n\nif (selection === 'vs') {\n    path = 'samples/kvd/implicit/satisfy/vs'; // Very Satisfy\n} else if (selection === 's') {\n    path = 'samples/kvd/implicit/satisfy/s'; // Satisfy\n} else if (selection === 'n') {\n    path = 'samples/kvd/implicit/satisfy/n'; // Neutral\n} else if (selection === 'd') {\n    path = 'samples/kvd/implicit/satisfy/d'; // Dissatisfied\n} else if (selection === 'vd') {\n    path = 'samples/kvd/implicit/satisfy/vd'; // Very Dissatisfied\n} else {\n    return null; // Invalid selection, do nothing\n}\n\n// Prepare the payload for the READ request\nmsg.path = path;\nmsg.payload = {\n    method: 'READ',\n    path: path\n};\n\n// Send the message for the READ operation\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 60,
+        "wires": [
+            [
+                "aa4e00226c4bbd8d"
+            ]
+        ]
+    },
+    {
+        "id": "aa4e00226c4bbd8d",
+        "type": "ctrlx-datalayer-request",
+        "z": "d0db2351575f5bd0",
+        "device": "5096f8cfb7e989cb",
+        "method": "READ",
+        "path": "",
+        "payloadFormat": "value_type",
+        "name": "Read Value",
+        "x": 370,
+        "y": 140,
+        "wires": [
+            [
+                "1df763cbc3242ea4"
+            ]
+        ]
+    },
+    {
+        "id": "1df763cbc3242ea4",
+        "type": "function",
+        "z": "d0db2351575f5bd0",
+        "name": "write value",
+        "func": "// Retrieve the current value from the previous node\nconst currentValue = msg.payload.value; // Ensure you are receiving the value correctly\n\n// Increment the value\nconst newValue = currentValue + 1;\n\n// Prepare the payload for the WRITE request\nconst data = {\n    type: 'int32',\n    value: newValue,\n};\n\n// Set the path for the selected satisfaction variable\nmsg.payload = data;\nmsg.method = 'WRITE';\nmsg.path = msg.path;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 80,
+        "wires": [
+            [
+                "96ddd9cdfb69481b"
+            ]
+        ]
+    },
+    {
+        "id": "96ddd9cdfb69481b",
+        "type": "ctrlx-datalayer-request",
+        "z": "d0db2351575f5bd0",
+        "device": "5096f8cfb7e989cb",
+        "method": "WRITE",
+        "path": "",
+        "payloadFormat": "value_type",
+        "name": "Write Value",
+        "x": 630,
+        "y": 140,
+        "wires": [
+            [
+                "459cace767900ee3"
+            ]
+        ]
+    },
+    {
+        "id": "459cace767900ee3",
+        "type": "debug",
+        "z": "d0db2351575f5bd0",
+        "name": "Debug Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "fb4e49bfc3a33c86",
+        "type": "ui_button",
+        "z": "d0db2351575f5bd0",
+        "name": "Satisfy",
+        "group": "ffb8a86199dc7711",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Satisfy",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#7cd676",
+        "className": "",
+        "icon": "",
+        "payload": "s",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "3b29467ba75d3f93"
+            ]
+        ]
+    },
+    {
+        "id": "cd400b7c2fee33b1",
+        "type": "ui_button",
+        "z": "d0db2351575f5bd0",
+        "name": "Neutral",
+        "group": "ffb8a86199dc7711",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Neutral",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#ffc107",
+        "className": "",
+        "icon": "",
+        "payload": "n",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 120,
+        "y": 180,
+        "wires": [
+            [
+                "3b29467ba75d3f93"
+            ]
+        ]
+    },
+    {
+        "id": "497a9d1a75f58ada",
+        "type": "ui_button",
+        "z": "d0db2351575f5bd0",
+        "name": "Very Satisfy",
+        "group": "ffb8a86199dc7711",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Very Satisfy",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#28a745",
+        "className": "",
+        "icon": "",
+        "payload": "vs",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 110,
+        "y": 60,
+        "wires": [
+            [
+                "3b29467ba75d3f93"
+            ]
+        ]
+    },
+    {
+        "id": "1263b26a993d403a",
+        "type": "ui_button",
+        "z": "d0db2351575f5bd0",
+        "name": "Dissatisfy",
+        "group": "ffb8a86199dc7711",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Dissatisfy",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#fd7e14",
+        "className": "",
+        "icon": "",
+        "payload": "d",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 120,
+        "y": 240,
+        "wires": [
+            [
+                "3b29467ba75d3f93"
+            ]
+        ]
+    },
+    {
+        "id": "abaec9735347901a",
+        "type": "ui_button",
+        "z": "d0db2351575f5bd0",
+        "name": "Very Dissatisfy",
+        "group": "ffb8a86199dc7711",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Very Dissatisfy",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#dc3545",
+        "className": "",
+        "icon": "",
+        "payload": "vd",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 140,
+        "y": 300,
+        "wires": [
+            [
+                "3b29467ba75d3f93"
+            ]
+        ]
+    },
+    {
+        "id": "5096f8cfb7e989cb",
+        "type": "ctrlx-config",
+        "name": "local_sub",
+        "hostname": "localhost",
+        "debug": false
+    },
+    {
+        "id": "ffb8a86199dc7711",
+        "type": "ui_group",
+        "name": "Satisfaction Form",
+        "tab": "2be4822ea698d223",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "2be4822ea698d223",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
