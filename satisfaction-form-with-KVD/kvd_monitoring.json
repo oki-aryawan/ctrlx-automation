@@ -1,0 +1,256 @@
+[
+    {
+        "id": "d5f83e64f0e36520",
+        "type": "tab",
+        "label": "Display Satisfaction Form",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "4ba8d6c51284191f",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "d5f83e64f0e36520",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "samples/kvd/implicit/satisfy/d",
+        "name": "D",
+        "x": 210,
+        "y": 200,
+        "wires": [
+            [
+                "51ba20bbfacc0812"
+            ]
+        ]
+    },
+    {
+        "id": "563772a00a616beb",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "d5f83e64f0e36520",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "samples/kvd/implicit/satisfy/n",
+        "name": "N",
+        "x": 210,
+        "y": 160,
+        "wires": [
+            [
+                "402171f89633bb72"
+            ]
+        ]
+    },
+    {
+        "id": "21171b4481682e8d",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "d5f83e64f0e36520",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "samples/kvd/implicit/satisfy/s",
+        "name": "S",
+        "x": 210,
+        "y": 120,
+        "wires": [
+            [
+                "cf8ed0eed1a50cee"
+            ]
+        ]
+    },
+    {
+        "id": "e33ff672c8dbd4c1",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "d5f83e64f0e36520",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "samples/kvd/implicit/satisfy/vs",
+        "name": "VS",
+        "x": 210,
+        "y": 80,
+        "wires": [
+            [
+                "367ddcbba9d11e25"
+            ]
+        ]
+    },
+    {
+        "id": "9fa1ec1681cfc77b",
+        "type": "ctrlx-datalayer-subscribe",
+        "z": "d5f83e64f0e36520",
+        "subscription": "0c1de4dcf35a4d8b",
+        "path": "samples/kvd/implicit/satisfy/vd",
+        "name": "VD",
+        "x": 210,
+        "y": 240,
+        "wires": [
+            [
+                "e18f7c741bedd03f"
+            ]
+        ]
+    },
+    {
+        "id": "a21a70ad1ec92a37",
+        "type": "ui_chart",
+        "z": "d5f83e64f0e36520",
+        "name": "",
+        "group": "2e05af44eb7c80b7",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Satisfaction Acumulation",
+        "chartType": "bar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 710,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "367ddcbba9d11e25",
+        "type": "function",
+        "z": "d5f83e64f0e36520",
+        "name": "vs",
+        "func": "msg.topic = \"Very Satisfy\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 80,
+        "wires": [
+            [
+                "a21a70ad1ec92a37"
+            ]
+        ]
+    },
+    {
+        "id": "cf8ed0eed1a50cee",
+        "type": "function",
+        "z": "d5f83e64f0e36520",
+        "name": "s",
+        "func": "msg.topic = \"Satisfy\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 120,
+        "wires": [
+            [
+                "a21a70ad1ec92a37"
+            ]
+        ]
+    },
+    {
+        "id": "402171f89633bb72",
+        "type": "function",
+        "z": "d5f83e64f0e36520",
+        "name": "n",
+        "func": "msg.topic = \"Neutral\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 160,
+        "wires": [
+            [
+                "a21a70ad1ec92a37"
+            ]
+        ]
+    },
+    {
+        "id": "51ba20bbfacc0812",
+        "type": "function",
+        "z": "d5f83e64f0e36520",
+        "name": "d",
+        "func": "msg.topic = \"Dissatisfy\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 200,
+        "wires": [
+            [
+                "a21a70ad1ec92a37"
+            ]
+        ]
+    },
+    {
+        "id": "e18f7c741bedd03f",
+        "type": "function",
+        "z": "d5f83e64f0e36520",
+        "name": "vd",
+        "func": "msg.topic = \"Very Dissatisfy\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 240,
+        "wires": [
+            [
+                "a21a70ad1ec92a37"
+            ]
+        ]
+    },
+    {
+        "id": "0c1de4dcf35a4d8b",
+        "type": "ctrlx-config-subscription",
+        "device": "5096f8cfb7e989cb",
+        "name": "local_subb",
+        "publishIntervalMs": "100"
+    },
+    {
+        "id": "2e05af44eb7c80b7",
+        "type": "ui_group",
+        "name": "Display",
+        "tab": "769917136a6f7079",
+        "order": 1,
+        "disp": true,
+        "width": 15,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "5096f8cfb7e989cb",
+        "type": "ctrlx-config",
+        "name": "local_sub",
+        "hostname": "localhost",
+        "debug": false
+    },
+    {
+        "id": "769917136a6f7079",
+        "type": "ui_tab",
+        "name": "Satisfaction Data",
+        "icon": "monitoring",
+        "disabled": false,
+        "hidden": false
+    }
+]
