@@ -1,0 +1,496 @@
+[
+    {
+        "id": "5a8c2d3d9a880600",
+        "type": "tab",
+        "label": "Satisfaction Form",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9610f56d996446cf",
+        "type": "function",
+        "z": "5a8c2d3d9a880600",
+        "name": "KVD select",
+        "func": "// Get the selected satisfaction level from the button click\nconst selection = msg.payload; \n\n// Define the path based on selection\nlet path = '';\n\nif (selection === 'vs') {\n    path = 'samples/kvd/implicit/satisfy/vs'; // Very Satisfy\n} else if (selection === 's') {\n    path = 'samples/kvd/implicit/satisfy/s'; // Satisfy\n} else if (selection === 'n') {\n    path = 'samples/kvd/implicit/satisfy/n'; // Neutral\n} else if (selection === 'd') {\n    path = 'samples/kvd/implicit/satisfy/d'; // Dissatisfied\n} else if (selection === 'vd') {\n    path = 'samples/kvd/implicit/satisfy/vd'; // Very Dissatisfied\n} else {\n    return null; // Invalid selection, do nothing\n}\n\n// Prepare the payload for the READ request\nmsg.path = path;\nmsg.payload = {\n    method: 'READ',\n    path: path\n};\n\n// Send the message for the READ operation\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 60,
+        "wires": [
+            [
+                "bc3b1d22cba00491"
+            ]
+        ]
+    },
+    {
+        "id": "bc3b1d22cba00491",
+        "type": "ctrlx-datalayer-request",
+        "z": "5a8c2d3d9a880600",
+        "device": "5096f8cfb7e989cb",
+        "method": "READ",
+        "path": "",
+        "payloadFormat": "value_type",
+        "name": "Read Value",
+        "x": 370,
+        "y": 140,
+        "wires": [
+            [
+                "5c0d17191cabc981"
+            ]
+        ]
+    },
+    {
+        "id": "5c0d17191cabc981",
+        "type": "function",
+        "z": "5a8c2d3d9a880600",
+        "name": "write value",
+        "func": "// Retrieve the current value from the previous node\nconst currentValue = msg.payload.value; // Ensure you are receiving the value correctly\n\n// Increment the value\nconst newValue = currentValue + 1;\n\n// Prepare the payload for the WRITE request\nconst data = {\n    type: 'int32',\n    value: newValue,\n};\n\n// Set the path for the selected satisfaction variable\nmsg.payload = data;\nmsg.method = 'WRITE';\nmsg.path = msg.path;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 80,
+        "wires": [
+            [
+                "9c49da458ac7479b"
+            ]
+        ]
+    },
+    {
+        "id": "9c49da458ac7479b",
+        "type": "ctrlx-datalayer-request",
+        "z": "5a8c2d3d9a880600",
+        "device": "5096f8cfb7e989cb",
+        "method": "WRITE",
+        "path": "",
+        "payloadFormat": "value_type",
+        "name": "Write Value",
+        "x": 630,
+        "y": 140,
+        "wires": [
+            [
+                "469ec7981908af3b"
+            ]
+        ]
+    },
+    {
+        "id": "469ec7981908af3b",
+        "type": "debug",
+        "z": "5a8c2d3d9a880600",
+        "name": "Debug Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "a354f77edc3834f4",
+        "type": "ui_button",
+        "z": "5a8c2d3d9a880600",
+        "d": true,
+        "name": "",
+        "group": "5f9307eaf41cb747",
+        "order": 16,
+        "width": 5,
+        "height": 2,
+        "passthru": false,
+        "label": "Good",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#40E0D0",
+        "className": "custom-button",
+        "icon": "fa-smile-o",
+        "payload": "s",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "9610f56d996446cf"
+            ]
+        ]
+    },
+    {
+        "id": "3a754966811e9550",
+        "type": "ui_button",
+        "z": "5a8c2d3d9a880600",
+        "name": "",
+        "group": "5f9307eaf41cb747",
+        "order": 6,
+        "width": 6,
+        "height": 4,
+        "passthru": false,
+        "label": "Meh..",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#a3bac8",
+        "className": "custom-button",
+        "icon": "fa-meh-o",
+        "payload": "n",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 110,
+        "y": 180,
+        "wires": [
+            [
+                "9610f56d996446cf"
+            ]
+        ]
+    },
+    {
+        "id": "a3cd86b59a98509a",
+        "type": "ui_button",
+        "z": "5a8c2d3d9a880600",
+        "name": "",
+        "group": "5f9307eaf41cb747",
+        "order": 4,
+        "width": 6,
+        "height": 4,
+        "passthru": false,
+        "label": "Epic!",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#00c8f7",
+        "className": "custom-button",
+        "icon": "fa-smile-o",
+        "payload": "vs",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 90,
+        "y": 60,
+        "wires": [
+            [
+                "9610f56d996446cf"
+            ]
+        ]
+    },
+    {
+        "id": "5af8873d09ecba87",
+        "type": "ui_button",
+        "z": "5a8c2d3d9a880600",
+        "d": true,
+        "name": "",
+        "group": "5f9307eaf41cb747",
+        "order": 21,
+        "width": 9,
+        "height": 2,
+        "passthru": false,
+        "label": "Not so good",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#808080",
+        "className": "custom-button",
+        "icon": "fa-meh-o",
+        "payload": "d",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 130,
+        "y": 240,
+        "wires": [
+            [
+                "9610f56d996446cf"
+            ]
+        ]
+    },
+    {
+        "id": "ec2c0b90abee8da4",
+        "type": "ui_button",
+        "z": "5a8c2d3d9a880600",
+        "name": "",
+        "group": "5f9307eaf41cb747",
+        "order": 8,
+        "width": 6,
+        "height": 4,
+        "passthru": false,
+        "label": "Terrible!",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#ed0007",
+        "className": "custom-button",
+        "icon": "fa-frown-o",
+        "payload": "vd",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 120,
+        "y": 300,
+        "wires": [
+            [
+                "9610f56d996446cf"
+            ]
+        ]
+    },
+    {
+        "id": "704d9c63ae6f9bf2",
+        "type": "ui_template",
+        "z": "5a8c2d3d9a880600",
+        "group": "aee5baaf76ca0de6",
+        "name": "",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n    /* Style for custom button class */\n    .custom-button .md-button {\n        display: flex;\n        /* Use flexbox for alignment */\n        flex-direction: column;\n        /* Arrange items in a column (icon above text) */\n        align-items: center;\n        /* Center items horizontally */\n        justify-content: center;\n        /* Center items vertically */\n        gap: 10px;\n        /* Space between icon and text */\n        border-radius: 15px;\n        /* Rounded corners */\n        padding: 15px 25px;\n        /* Padding for better spacing */\n        font-size: 30px;\n        /* Adjust text size */\n        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n        /* Subtle shadow */\n        transition: all 0.3s ease;\n        /* Smooth transition for hover effect */\n        text-align: center;\n        /* Center-align text */\n    }\n\n    /* Style for button hover effect */\n    .custom-button .md-button:hover {\n        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);\n        /* Increase shadow on hover */\n        transform: translateY(-3px);\n        /* Lift button slightly */\n    }\n\n    /* Target icons within the custom class buttons */\n    .custom-button .fa {\n        font-size: 150px;\n        /* Increase icon size for more emphasis */\n    }\n\n    /* Optional: Add some margin between the buttons */\n    .custom-button {\n        margin-bottom: 35px;\n        /* Add space between buttons */\n    }\n</style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "global",
+        "className": "",
+        "x": 380,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "57f050736fd4f6c3",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 1,
+        "width": 20,
+        "height": 1
+    },
+    {
+        "id": "b721b377a52704d4",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 2,
+        "width": 20,
+        "height": 1
+    },
+    {
+        "id": "ba8111aad955d6f3",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 3,
+        "width": 20,
+        "height": 1
+    },
+    {
+        "id": "9deb92f0710ec63a",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 5,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "4ec0efcfe681e997",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 7,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "ef3533d324c94b39",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 9,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "f038f253e1cd691f",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 10,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "c3970ca0ba505c62",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 11,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "84cf37dec706fbf6",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 12,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "a45cc8d475bede89",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 13,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "218f2625e270473b",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 14,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "27033e794c649da6",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 15,
+        "width": 13,
+        "height": 1
+    },
+    {
+        "id": "d112664d73a239de",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 17,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "92d5eb32ed7afa7e",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 18,
+        "width": 13,
+        "height": 1
+    },
+    {
+        "id": "3f5202b09b9de68c",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 19,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "b871b9988b17cd76",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 20,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "d41e79a63da939ce",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 22,
+        "width": 8,
+        "height": 1
+    },
+    {
+        "id": "0732be8937e3f861",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 23,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "76be51097d994099",
+        "type": "ui_spacer",
+        "z": "5a8c2d3d9a880600",
+        "name": "spacer",
+        "group": "5f9307eaf41cb747",
+        "order": 24,
+        "width": 8,
+        "height": 1
+    },
+    {
+        "id": "5096f8cfb7e989cb",
+        "type": "ctrlx-config",
+        "name": "local_sub",
+        "hostname": "localhost",
+        "debug": false
+    },
+    {
+        "id": "5f9307eaf41cb747",
+        "type": "ui_group",
+        "name": "",
+        "tab": "2263821e63b705e5",
+        "order": 1,
+        "disp": true,
+        "width": 20,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "aee5baaf76ca0de6",
+        "type": "ui_group",
+        "name": "Monitoring",
+        "tab": "58d0cae575f2a726",
+        "order": 1,
+        "disp": true,
+        "width": "9",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "2263821e63b705e5",
+        "type": "ui_tab",
+        "name": "Satisfaction Form",
+        "icon": "fa-desktop",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "58d0cae575f2a726",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
