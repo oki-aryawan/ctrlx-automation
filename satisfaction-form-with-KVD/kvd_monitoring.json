@@ -1,96 +1,335 @@
 [
     {
-        "id": "d5f83e64f0e36520",
+        "id": "0d3d9e84271c3a9a",
         "type": "tab",
         "label": "Display Satisfaction Form",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "4ba8d6c51284191f",
+        "id": "de33d704cf59ad8f",
         "type": "ctrlx-datalayer-subscribe",
-        "z": "d5f83e64f0e36520",
+        "z": "0d3d9e84271c3a9a",
         "subscription": "0c1de4dcf35a4d8b",
         "path": "samples/kvd/implicit/satisfy/d",
         "name": "D",
-        "x": 210,
+        "x": 270,
         "y": 200,
         "wires": [
             [
-                "51ba20bbfacc0812"
+                "56cac07ae2ac4520"
             ]
         ]
     },
     {
-        "id": "563772a00a616beb",
+        "id": "8c4169e9ac1bfdd2",
         "type": "ctrlx-datalayer-subscribe",
-        "z": "d5f83e64f0e36520",
+        "z": "0d3d9e84271c3a9a",
         "subscription": "0c1de4dcf35a4d8b",
         "path": "samples/kvd/implicit/satisfy/n",
         "name": "N",
-        "x": 210,
+        "x": 270,
         "y": 160,
         "wires": [
             [
-                "402171f89633bb72"
+                "31bd6fe822fc80d1"
             ]
         ]
     },
     {
-        "id": "21171b4481682e8d",
+        "id": "6a8f5a33aec2f49b",
         "type": "ctrlx-datalayer-subscribe",
-        "z": "d5f83e64f0e36520",
+        "z": "0d3d9e84271c3a9a",
         "subscription": "0c1de4dcf35a4d8b",
         "path": "samples/kvd/implicit/satisfy/s",
         "name": "S",
-        "x": 210,
+        "x": 270,
         "y": 120,
         "wires": [
             [
-                "cf8ed0eed1a50cee"
+                "bd356d51dfad349c"
             ]
         ]
     },
     {
-        "id": "e33ff672c8dbd4c1",
+        "id": "0ca83e4373f00d28",
         "type": "ctrlx-datalayer-subscribe",
-        "z": "d5f83e64f0e36520",
+        "z": "0d3d9e84271c3a9a",
         "subscription": "0c1de4dcf35a4d8b",
         "path": "samples/kvd/implicit/satisfy/vs",
         "name": "VS",
-        "x": 210,
+        "x": 270,
         "y": 80,
         "wires": [
             [
-                "367ddcbba9d11e25"
+                "d0f74b9ff550cddd"
             ]
         ]
     },
     {
-        "id": "9fa1ec1681cfc77b",
+        "id": "ce74b024dcb9f306",
         "type": "ctrlx-datalayer-subscribe",
-        "z": "d5f83e64f0e36520",
+        "z": "0d3d9e84271c3a9a",
         "subscription": "0c1de4dcf35a4d8b",
         "path": "samples/kvd/implicit/satisfy/vd",
         "name": "VD",
-        "x": 210,
+        "x": 270,
         "y": 240,
         "wires": [
             [
-                "e18f7c741bedd03f"
+                "09ae02ee31e5071a"
             ]
         ]
     },
     {
-        "id": "a21a70ad1ec92a37",
+        "id": "d0f74b9ff550cddd",
+        "type": "function",
+        "z": "0d3d9e84271c3a9a",
+        "name": "vs",
+        "func": "msg.topic = \"Awesome\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 80,
+        "wires": [
+            [
+                "98ba4e392283d9c9",
+                "4287023d6a5a4c80",
+                "ad92d4cdabc2f67c"
+            ]
+        ]
+    },
+    {
+        "id": "bd356d51dfad349c",
+        "type": "function",
+        "z": "0d3d9e84271c3a9a",
+        "name": "s",
+        "func": "msg.topic = \"Good\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 120,
+        "wires": [
+            [
+                "7473cc7fa1653a43",
+                "4287023d6a5a4c80",
+                "ad92d4cdabc2f67c"
+            ]
+        ]
+    },
+    {
+        "id": "31bd6fe822fc80d1",
+        "type": "function",
+        "z": "0d3d9e84271c3a9a",
+        "name": "n",
+        "func": "msg.topic = \"So so\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 160,
+        "wires": [
+            [
+                "daf18507bc9e5041",
+                "4287023d6a5a4c80",
+                "ad92d4cdabc2f67c"
+            ]
+        ]
+    },
+    {
+        "id": "56cac07ae2ac4520",
+        "type": "function",
+        "z": "0d3d9e84271c3a9a",
+        "name": "d",
+        "func": "msg.topic = \"Not So Good\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 200,
+        "wires": [
+            [
+                "b2222fa9f79520f5",
+                "4287023d6a5a4c80",
+                "ad92d4cdabc2f67c"
+            ]
+        ]
+    },
+    {
+        "id": "09ae02ee31e5071a",
+        "type": "function",
+        "z": "0d3d9e84271c3a9a",
+        "name": "vd",
+        "func": "msg.topic = \"Terrible\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 240,
+        "wires": [
+            [
+                "deadca6f07711e31",
+                "4287023d6a5a4c80",
+                "ad92d4cdabc2f67c"
+            ]
+        ]
+    },
+    {
+        "id": "98ba4e392283d9c9",
+        "type": "influxdb out",
+        "z": "0d3d9e84271c3a9a",
+        "influxdb": "e7c2108fb1d3654e",
+        "name": "vs",
+        "measurement": "vs",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "rexroth",
+        "bucket": "form",
+        "x": 630,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "deadca6f07711e31",
+        "type": "influxdb out",
+        "z": "0d3d9e84271c3a9a",
+        "influxdb": "e7c2108fb1d3654e",
+        "name": "vd",
+        "measurement": "vd",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "rexroth",
+        "bucket": "form",
+        "x": 630,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "daf18507bc9e5041",
+        "type": "influxdb out",
+        "z": "0d3d9e84271c3a9a",
+        "influxdb": "e7c2108fb1d3654e",
+        "name": "n",
+        "measurement": "n",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "rexroth",
+        "bucket": "form",
+        "x": 630,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "7473cc7fa1653a43",
+        "type": "influxdb out",
+        "z": "0d3d9e84271c3a9a",
+        "influxdb": "e7c2108fb1d3654e",
+        "name": "s",
+        "measurement": "s",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "rexroth",
+        "bucket": "form",
+        "x": 630,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "b2222fa9f79520f5",
+        "type": "influxdb out",
+        "z": "0d3d9e84271c3a9a",
+        "influxdb": "e7c2108fb1d3654e",
+        "name": "d",
+        "measurement": "d",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "rexroth",
+        "bucket": "form",
+        "x": 630,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "4287023d6a5a4c80",
         "type": "ui_chart",
-        "z": "d5f83e64f0e36520",
-        "name": "",
-        "group": "2e05af44eb7c80b7",
+        "z": "0d3d9e84271c3a9a",
+        "name": "pie",
+        "group": "30698ae77f2c2554",
         "order": 1,
         "width": 0,
         "height": 0,
-        "label": "Satisfaction Acumulation",
+        "label": "",
+        "chartType": "pie",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 630,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ad92d4cdabc2f67c",
+        "type": "ui_chart",
+        "z": "0d3d9e84271c3a9a",
+        "name": "bar",
+        "group": "4dd59c93c2881dfb",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "",
         "chartType": "bar",
         "legend": "false",
         "xformat": "HH:mm:ss",
@@ -119,105 +358,10 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 710,
-        "y": 140,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "367ddcbba9d11e25",
-        "type": "function",
-        "z": "d5f83e64f0e36520",
-        "name": "vs",
-        "func": "msg.topic = \"Very Satisfy\";\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 410,
-        "y": 80,
-        "wires": [
-            [
-                "a21a70ad1ec92a37"
-            ]
-        ]
-    },
-    {
-        "id": "cf8ed0eed1a50cee",
-        "type": "function",
-        "z": "d5f83e64f0e36520",
-        "name": "s",
-        "func": "msg.topic = \"Satisfy\";\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 410,
+        "x": 630,
         "y": 120,
         "wires": [
-            [
-                "a21a70ad1ec92a37"
-            ]
-        ]
-    },
-    {
-        "id": "402171f89633bb72",
-        "type": "function",
-        "z": "d5f83e64f0e36520",
-        "name": "n",
-        "func": "msg.topic = \"Neutral\";\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 410,
-        "y": 160,
-        "wires": [
-            [
-                "a21a70ad1ec92a37"
-            ]
-        ]
-    },
-    {
-        "id": "51ba20bbfacc0812",
-        "type": "function",
-        "z": "d5f83e64f0e36520",
-        "name": "d",
-        "func": "msg.topic = \"Dissatisfy\";\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 410,
-        "y": 200,
-        "wires": [
-            [
-                "a21a70ad1ec92a37"
-            ]
-        ]
-    },
-    {
-        "id": "e18f7c741bedd03f",
-        "type": "function",
-        "z": "d5f83e64f0e36520",
-        "name": "vd",
-        "func": "msg.topic = \"Very Dissatisfy\";\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 410,
-        "y": 240,
-        "wires": [
-            [
-                "a21a70ad1ec92a37"
-            ]
+            []
         ]
     },
     {
@@ -225,17 +369,43 @@
         "type": "ctrlx-config-subscription",
         "device": "5096f8cfb7e989cb",
         "name": "local_subb",
-        "publishIntervalMs": "100"
+        "publishIntervalMs": "1"
     },
     {
-        "id": "2e05af44eb7c80b7",
+        "id": "e7c2108fb1d3654e",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "form",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8086",
+        "timeout": "10",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "30698ae77f2c2554",
         "type": "ui_group",
-        "name": "Display",
-        "tab": "769917136a6f7079",
+        "name": "Pie Chart",
+        "tab": "3266a93f9ac7b406",
+        "order": 2,
+        "disp": true,
+        "width": 10,
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "4dd59c93c2881dfb",
+        "type": "ui_group",
+        "name": "Bar Chart",
+        "tab": "3266a93f9ac7b406",
         "order": 1,
         "disp": true,
-        "width": 15,
-        "collapse": false,
+        "width": "15",
+        "collapse": true,
         "className": ""
     },
     {
@@ -246,10 +416,10 @@
         "debug": false
     },
     {
-        "id": "769917136a6f7079",
+        "id": "3266a93f9ac7b406",
         "type": "ui_tab",
         "name": "Satisfaction Data",
-        "icon": "monitoring",
+        "icon": "fa-check-square-o",
         "disabled": false,
         "hidden": false
     }
