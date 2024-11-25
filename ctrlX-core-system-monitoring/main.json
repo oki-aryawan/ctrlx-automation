@@ -1,0 +1,675 @@
+[
+    {
+        "id": "7dd03cddc6337e7f",
+        "type": "tab",
+        "label": "Monitoring CtrlX System",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "19ac66b5e92d264f",
+        "type": "ui_chart",
+        "z": "7dd03cddc6337e7f",
+        "name": "",
+        "group": "772ddf12352b5fe7",
+        "order": 1,
+        "width": 16,
+        "height": 15,
+        "label": "Log Data",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "10",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 700,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "77c333197c27a2ec",
+        "type": "influxdb in",
+        "z": "7dd03cddc6337e7f",
+        "influxdb": "9be3bf4c0fd3e05c",
+        "name": "data",
+        "query": "from(bucket: \"ctrlx_system\")\n  |> range(start: -1h)  // Defines the last hour as the time range\n  |> filter(fn: (r) => r[\"_measurement\"] == \"metrics\")\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu\" or r[\"_field\"] == \"mem\")\n  |> last()",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "boschrexroth",
+        "x": 410,
+        "y": 160,
+        "wires": [
+            [
+                "c488d8f90dc2f06a",
+                "39ac899b0d748a5d"
+            ]
+        ]
+    },
+    {
+        "id": "c488d8f90dc2f06a",
+        "type": "function",
+        "z": "7dd03cddc6337e7f",
+        "name": "cpu",
+        "func": "let cpuValue = msg.payload.find(item => item._field === \"cpu\");\nmsg.payload = cpuValue ? cpuValue._value : null;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 160,
+        "wires": [
+            [
+                "b6e5f3c7c825b1e3"
+            ]
+        ]
+    },
+    {
+        "id": "268fefe0af589eb4",
+        "type": "debug",
+        "z": "7dd03cddc6337e7f",
+        "name": "MQTT out",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "997f49112e05630e",
+        "type": "inject",
+        "z": "7dd03cddc6337e7f",
+        "name": "injct",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 270,
+        "y": 160,
+        "wires": [
+            [
+                "77c333197c27a2ec"
+            ]
+        ]
+    },
+    {
+        "id": "0d40b73b26b1761b",
+        "type": "comment",
+        "z": "7dd03cddc6337e7f",
+        "name": "get data from InfluxDB",
+        "info": "",
+        "x": 320,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "39ac899b0d748a5d",
+        "type": "function",
+        "z": "7dd03cddc6337e7f",
+        "name": "mem",
+        "func": "let memValue = msg.payload.find(item => item._field === \"mem\");\nmsg.payload = memValue ? memValue._value : null;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 220,
+        "wires": [
+            [
+                "c62306dd15f29def"
+            ]
+        ]
+    },
+    {
+        "id": "b6e5f3c7c825b1e3",
+        "type": "mqtt out",
+        "z": "7dd03cddc6337e7f",
+        "name": "",
+        "topic": "cpu",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "1d90be594e9a55a6",
+        "x": 710,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "411c9661ed032949",
+        "type": "aedes broker",
+        "z": "7dd03cddc6337e7f",
+        "name": "",
+        "mqtt_port": 1883,
+        "mqtt_ws_bind": "port",
+        "mqtt_ws_port": "",
+        "mqtt_ws_path": "",
+        "cert": "",
+        "key": "",
+        "certname": "",
+        "keyname": "",
+        "persistence_bind": "memory",
+        "dburl": "",
+        "usetls": false,
+        "x": 310,
+        "y": 300,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "8442ba3702a17a89",
+        "type": "comment",
+        "z": "7dd03cddc6337e7f",
+        "name": "MQTT Broker",
+        "info": "",
+        "x": 290,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "c62306dd15f29def",
+        "type": "mqtt out",
+        "z": "7dd03cddc6337e7f",
+        "name": "",
+        "topic": "mem",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "1d90be594e9a55a6",
+        "x": 710,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "7072bb2521e70c1e",
+        "type": "comment",
+        "z": "7dd03cddc6337e7f",
+        "name": "get data from MQTT Broker",
+        "info": "",
+        "x": 340,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "d67b745373ad79a1",
+        "type": "comment",
+        "z": "7dd03cddc6337e7f",
+        "name": "publish to MQTT Broker",
+        "info": "",
+        "x": 710,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "e5de7ababb589550",
+        "type": "mqtt in",
+        "z": "7dd03cddc6337e7f",
+        "name": "cpu",
+        "topic": "cpu",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "1d90be594e9a55a6",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 270,
+        "y": 420,
+        "wires": [
+            [
+                "f607a5a61af91f26",
+                "8923603fc6abd95c"
+            ]
+        ]
+    },
+    {
+        "id": "8e67665ff3626d90",
+        "type": "mqtt in",
+        "z": "7dd03cddc6337e7f",
+        "name": "mem",
+        "topic": "mem",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "1d90be594e9a55a6",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 270,
+        "y": 500,
+        "wires": [
+            [
+                "2fe8f41092f7b3ab",
+                "311be91d5f452827"
+            ]
+        ]
+    },
+    {
+        "id": "f607a5a61af91f26",
+        "type": "function",
+        "z": "7dd03cddc6337e7f",
+        "name": "cpu",
+        "func": "msg.topic = \"CPU Used(%)\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 440,
+        "wires": [
+            [
+                "19ac66b5e92d264f"
+            ]
+        ]
+    },
+    {
+        "id": "2fe8f41092f7b3ab",
+        "type": "function",
+        "z": "7dd03cddc6337e7f",
+        "name": "mem",
+        "func": "msg.topic = \"Memory Used(%)\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 480,
+        "wires": [
+            [
+                "19ac66b5e92d264f"
+            ]
+        ]
+    },
+    {
+        "id": "1fe7a387924077fb",
+        "type": "comment",
+        "z": "7dd03cddc6337e7f",
+        "name": "display",
+        "info": "",
+        "x": 690,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "bc12936ace177735",
+        "type": "comment",
+        "z": "7dd03cddc6337e7f",
+        "name": "generate PDF report",
+        "info": "",
+        "x": 320,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "184a7a58d188b2de",
+        "type": "file",
+        "z": "7dd03cddc6337e7f",
+        "name": "path",
+        "filename": "solutions/activeConfiguration/node-RED/ReportResult/SystemReport.pdf",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 810,
+        "y": 660,
+        "wires": [
+            [
+                "bc53c68f80868d70"
+            ]
+        ]
+    },
+    {
+        "id": "bc53c68f80868d70",
+        "type": "debug",
+        "z": "7dd03cddc6337e7f",
+        "name": "PDF",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 930,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "63ae39fef3a147ed",
+        "type": "function",
+        "z": "7dd03cddc6337e7f",
+        "name": "Format",
+        "func": "// Retrieve data from InfluxDB response\nlet influxData = msg.payload;\nlet cpuData = {};\nlet memoryData = {};\n\n// Process each entry from InfluxDB and group by CPU and memory with timestamps\ninfluxData.forEach(entry => {\n    let time = new Date(entry._time).toLocaleTimeString();\n    if (entry._field === \"cpu\") {\n        cpuData[time] = entry._value;\n    } else if (entry._field === \"mem\") {\n        memoryData[time] = entry._value;\n    }\n});\n\n// Prepare data for PDF table\nlet data = [];\n\n// Combine CPU and memory data into the table format for the PDF\nObject.keys(cpuData).forEach(time => {\n    let cpuUsage = cpuData[time] || '';         // CPU usage at the timestamp\n    let memoryUsage = memoryData[time] || '';    // Memory usage at the timestamp\n\n    // Add data for each row in the PDF table\n    data.push([\n        { text: time, alignment: 'center' },\n        { text: cpuUsage.toFixed(2), alignment: 'center' },\n        { text: memoryUsage.toFixed(2), alignment: 'center' }\n    ]);\n});\n\n// Format PDF content\nmsg.payload = {\n    content: [\n        { text: 'CPU and Memory Usage Report', style: 'header' },\n        {\n            table: {\n                body: [\n                    [\n                        { text: 'Time', alignment: 'center' },\n                        { text: 'CPU Usage (%)', alignment: 'center' },\n                        { text: 'Memory Usage (MB)', alignment: 'center' }\n                    ],\n                    ...data\n                ]\n            }\n        }\n    ],\n    styles: {\n        header: {\n            fontSize: 18,\n            bold: true,\n            margin: [0, 0, 0, 10]\n        }\n    }\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 660,
+        "wires": [
+            [
+                "62c0070076b922ba"
+            ]
+        ]
+    },
+    {
+        "id": "10b3fd2166d144be",
+        "type": "influxdb in",
+        "z": "7dd03cddc6337e7f",
+        "influxdb": "9be3bf4c0fd3e05c",
+        "name": "data",
+        "query": "from(bucket: \"ctrlx_system\")\n  |> range(start: -1h)  // Defines the last hour as the time range\n  |> filter(fn: (r) => r[\"_measurement\"] == \"metrics\")\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu\" or r[\"_field\"] == \"mem\")\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "boschrexroth",
+        "x": 430,
+        "y": 660,
+        "wires": [
+            [
+                "63ae39fef3a147ed"
+            ]
+        ]
+    },
+    {
+        "id": "c092695c36d5bcbb",
+        "type": "inject",
+        "z": "7dd03cddc6337e7f",
+        "name": "generate",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 720,
+        "wires": [
+            [
+                "10b3fd2166d144be"
+            ]
+        ]
+    },
+    {
+        "id": "c780760821d437db",
+        "type": "ui_button",
+        "z": "7dd03cddc6337e7f",
+        "name": "",
+        "group": "ad553b639df3054a",
+        "order": 5,
+        "width": 9,
+        "height": 1,
+        "passthru": false,
+        "label": "generate",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 280,
+        "y": 660,
+        "wires": [
+            [
+                "10b3fd2166d144be"
+            ]
+        ]
+    },
+    {
+        "id": "62c0070076b922ba",
+        "type": "pdfmake",
+        "z": "7dd03cddc6337e7f",
+        "name": "pdf",
+        "outputType": "Buffer",
+        "inputProperty": "payload",
+        "options": "{}",
+        "outputProperty": "payload",
+        "x": 690,
+        "y": 660,
+        "wires": [
+            [
+                "184a7a58d188b2de"
+            ]
+        ]
+    },
+    {
+        "id": "8923603fc6abd95c",
+        "type": "ui_gauge",
+        "z": "7dd03cddc6337e7f",
+        "name": "",
+        "group": "ad553b639df3054a",
+        "order": 1,
+        "width": 15,
+        "height": 6,
+        "gtype": "gage",
+        "title": "CPU Used",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 710,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "311be91d5f452827",
+        "type": "ui_gauge",
+        "z": "7dd03cddc6337e7f",
+        "name": "",
+        "group": "ad553b639df3054a",
+        "order": 2,
+        "width": 15,
+        "height": 7,
+        "gtype": "gage",
+        "title": "Mem Used",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 710,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "6a2d2fe908cdc5bb",
+        "type": "ui_spacer",
+        "z": "7dd03cddc6337e7f",
+        "name": "spacer",
+        "group": "7f0066ca7abaa90f",
+        "order": 3,
+        "width": 14,
+        "height": 1
+    },
+    {
+        "id": "5afea064ee46257b",
+        "type": "ui_spacer",
+        "z": "7dd03cddc6337e7f",
+        "name": "spacer",
+        "group": "7f0066ca7abaa90f",
+        "order": 4,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "d47b1c905f6b28e7",
+        "type": "ui_spacer",
+        "z": "7dd03cddc6337e7f",
+        "name": "spacer",
+        "group": "7f0066ca7abaa90f",
+        "order": 6,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "772ddf12352b5fe7",
+        "type": "ui_group",
+        "name": "Log",
+        "tab": "fa665b22d17fd51c",
+        "order": 2,
+        "disp": true,
+        "width": 16,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "9be3bf4c0fd3e05c",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "ctrlx",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://192.168.1.1:8086",
+        "timeout": "10",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "1d90be594e9a55a6",
+        "type": "mqtt-broker",
+        "name": "ctrlx",
+        "broker": "192.168.1.1",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "ad553b639df3054a",
+        "type": "ui_group",
+        "name": "ctrlX",
+        "tab": "fa665b22d17fd51c",
+        "order": 1,
+        "disp": true,
+        "width": 15,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "fa665b22d17fd51c",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]
